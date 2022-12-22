@@ -43,7 +43,7 @@ else{
    $query = "insert into users (userid,username,email,password,date) values (:userid,:username,:email,:password,:date)";
    $result = $DB->write($query,$data);
    if ($result) {
-    $info->message = "Your profile was created.";
+    $info->message = "Your profile was created.<br>";
     $info->data_type = "info";
     echo json_encode($info);
     

@@ -115,6 +115,8 @@
                     <label id="label_contacts" for="radio_contacts">Contact<img src="ui/icons/contacts.png" alt=""></label>
                     <label id="label_settings" for="radio_settings">Settings<img src="ui/icons/settings.png" alt=""></label>
                     <label id="label_settings" for="radio_blocked">Blocked Users<img src="ui/icons/settings.png" alt=""></label>
+
+                    <label id="logout" for="radio_logout">Logout<img src="ui/icons/logout1.png" alt=""></label>
                 </div>
 
             </div>
@@ -139,6 +141,8 @@
     function _(element) {
         return document.getElementById(element);
     }
+    var logout=_("logout");
+    logout.addEventListener("click",logout_user);
     function get_data(find,type){
             var xml=new XMLHttpRequest();
             xml.onload=function(){
@@ -157,12 +161,29 @@
    
     if(result.trim()!=""){
     var obj=JSON.parse(result);
-    if(!obj.logged_in ){
+    if(typeof(obj.logged_in)!="undefined" && !obj.logged_in ){
         window.location="login.php";
     }else{
-        alert(result);
+        switch(obj.data_type){
+            case "user_info":
+                var username=_("username");
+                var email=_("email");
+                username.innerHTML=obj.username;
+                email.innerHTML=obj.email;
+                break;
+            case "contacts":
+
+                break;
+        }
     }
     }
+   }
+   function logout_user(){
+    var answer=confirm("Are you sure you want to log out?");
+    if(answer){
+        get_data({},"logout");
+    }
+  
    }
    get_data({},"user_info");
 </script>

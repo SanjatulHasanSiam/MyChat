@@ -45,7 +45,7 @@
     
     input[type=text],
     input[type=password],
-    input[type=button] {
+    input[type=submit] {
         padding: 10px;
         margin: 10px;
         width: 98%;
@@ -53,7 +53,7 @@
         border-radius: 5px;
     }
     
-    input[type=button] {
+    input[type=submit] {
         width: 103%;
         cursor: pointer;
         background-color: #2b5488;
@@ -81,7 +81,7 @@
         <form id="myForm" action="">
             <input type="text" name="email" placeholder="Enter Email"><br>
             <input type="password" name="password" placeholder="Enter new password"><br>
-            <input type="button" value="Log In" id="login_button"><br>
+            <input type="submit" value="Log In" id="login_button"><br>
         </form>
     </div>
 </body>
@@ -93,7 +93,8 @@
     }
     var login_button=_("login_button");
     login_button.addEventListener("click",collect_data);
-    function collect_data(){
+    function collect_data(e){
+        e.preventDefault();
         login_button.disabled=true;
         login_button.value="Loading... Please wait...";
         var myForm=_("myForm");
