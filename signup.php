@@ -84,8 +84,8 @@
 
             <div style="padding:10px">
                 <br>Gender: <br>
-                <input type="radio" value="Male" name="gender" id="">Male <br>
-                <input type="radio" value="Female" name="gender" id="">Female <br>
+                <input type="radio" value="Male" name="gender_male" id="">Male <br>
+                <input type="radio" value="Female" name="gender_female" id="">Female <br>
             </div>
 
             <input type="password" name="password" placeholder="Enter new password"><br>
@@ -118,7 +118,8 @@
                 case "email":
                     data.email=inputs[i].value;
                  break;  
-                case "gender":
+                case "gender_male":
+                case "gender_female":
                     if(inputs[i].checked){
                         data.gender=inputs[i].value;
                     }

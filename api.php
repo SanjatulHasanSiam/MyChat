@@ -33,3 +33,15 @@ else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="user_info"){
  // user_info
  include("includes/user_info.php");
 }
+else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="contacts"){
+  // user_info
+  include("includes/contacts.php");
+ }
+ else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="chats"){
+  // user_info
+  include("includes/chats.php");
+ }
+ else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="settings"){
+  // user_info
+  include("includes/settings.php");
+ }

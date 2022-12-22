@@ -51,7 +51,7 @@ public function read($query,$data_array=[]){
     if(is_array($result) && count($result)>0){
         return $result;
     }
-      return false;
+      return true;
   }else{
     return false;
   }
