@@ -5,7 +5,7 @@ $DATA_OBJ=json_decode($DATA_RAW);
 $info=(object)[];
 //check if logged in
 if (!isset($_SESSION['userid'])) {
-  if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type!= "login") {
+  if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type!= "login" && $DATA_OBJ->data_type!= "signup") {
     $info->logged_in = false;
     echo json_encode($info);
     die;

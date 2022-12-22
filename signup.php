@@ -91,6 +91,7 @@
             <input type="password" name="password" placeholder="Enter new password"><br>
             <input type="password" name="password2" placeholder="Retype password"><br>
             <input type="button" value="Sign up" id="signup_button"><br>
+            <a href="login.php" style="text-decoration:none;display:block;text-align:center;">Already have an account? Log In here</a>
         </form>
     </div>
 </body>
