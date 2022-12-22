@@ -1,4 +1,5 @@
 <?php
+sleep(1);
  $mydata = 
  'Settings goes here';
     //$result = $result[0];

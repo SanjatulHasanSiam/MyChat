@@ -74,6 +74,7 @@
         font-size: 40px;
         text-align: center;
         font-family: headFont;
+        position: relative;
     }
     
     #inner_left_pannel {
@@ -113,6 +114,13 @@
         height: 100px;
         border-radius: 50%;
     }
+    .loader_on{
+        position: absolute;
+        width: 30%;
+    }
+    .loader_off{
+        display:none;
+    }
 </style>
 
 <body>
@@ -135,8 +143,12 @@
             </div>
         </div>
         <div id="right_pannel">
-                <div id="header">My Chat</div>
+                <div id="header">
+                <div id="loader_holder" class="loader_on"><img src="ui/icons/giphy.gif" style="width:70px;"></div>
+                    My Chat
+                </div>
                 <div id="container" style="display:flex">
+                
                     <div id="inner_left_pannel">
                    
                 </div>
@@ -166,9 +178,13 @@
     label_settings.addEventListener("click",get_settings);
 
     function get_data(find,type){
+
             var xml=new XMLHttpRequest();
+            var loader_holder=_("loader_holder");
+            loader_holder.className="loader_on";
             xml.onload=function(){
                 if(xml.readyState==4 || xml.status==200){
+                    loader_holder.className="loader_off";
                    handle_result(xml.responseText,type); 
                 }
             }

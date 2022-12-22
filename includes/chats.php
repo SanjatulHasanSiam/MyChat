@@ -1,4 +1,5 @@
 <?php
+sleep(1);
  $mydata = 
  ' Chatts go here';
     //$result = $result[0];

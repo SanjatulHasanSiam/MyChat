@@ -1,4 +1,5 @@
  <?php
+ sleep(1.5);
  $sql = "select * from users limit 10";
  $myusers=$DB->read($sql,[]);
  $mydata = 
