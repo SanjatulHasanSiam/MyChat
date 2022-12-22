@@ -64,6 +64,12 @@
         transform: scale(1.2);
         cursor: pointer;
     }
+    #error{
+        text-align:center; 
+        padding: 0.5em; 
+        background-color: #ecaf91; color: white;  
+        display:none;
+    }
 </style>
 
 <body>
@@ -71,6 +77,7 @@
         <div id="header">My Chat
             <div style="font-size: 20px; font-family:myFont; padding-bottom:10px;">Sign Up</div>
         </div>
+        <div id="error" style=""></div>
         <form id="myForm" action="">
             <input type="text" name="username" placeholder="Enter Username"><br>
             <input type="text" name="email" placeholder="Enter Email"><br>
@@ -96,6 +103,8 @@
     var signup_button=_("signup_button");
     signup_button.addEventListener("click",collect_data);
     function collect_data(){
+        signup_button.disabled=true;
+        signup_button.value="Loading... Please wait...";
         var myForm=_("myForm");
         var inputs=myForm.getElementsByTagName("INPUT");
         var data={};
@@ -122,6 +131,7 @@
             }
       }
       send_data(data,"signup");
+      
     }
 
     function send_data(data,type){
@@ -129,12 +139,24 @@
         var xml=new XMLHttpRequest();
         xml.onload=function(){
             if(xml.readState==4 || xml.status==200){
-                alert(xml.responseText);
+                handle_result(xml.responseText);
+                signup_button.disabled=false;
+                signup_button.value="Sign Up";
             } 
         }
             data.data_type=type;
             var data_string=JSON.stringify(data);
             xml.open("POST","api.php",true);
             xml.send(data_string);
+    }
+    function handle_result(result){
+        var data=JSON.parse(result);
+        if(data.data_type=="info"){
+            window.location="index.php";
+        }else{
+            var error=_("error");
+            error.innerHTML=data.message;
+            error.style.display="block";
+        }
     }
 </script>
