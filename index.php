@@ -105,9 +105,10 @@
 <body>
     <div id="wrapper">
         <div id="left_pannel">
-            <div style="padding: 10px;">
-                <img id="profile_image" src="ui/images/user3.jpg" alt=""><br> Kelly Heartman <br>
-                <span style="font-size: 12 px; opacity:0.5;"> kellyHeartman@gmail.com</span>
+            <div id="user_info" style="padding: 10px;">
+                <img id="profile_image" src="ui/images/user_male.jpg" alt=""><br>
+                 <span id="username"> Username</span> <br>
+                <span id="email" style="font-size: 12 px; opacity:0.5;"> user@email.com</span>
                 <br><br><br>
                 <div>
                     <label id="label_chat" for="radio_chat">Chat <img src="ui/icons/chat.png" alt=""></label>
@@ -138,15 +139,30 @@
     function _(element) {
         return document.getElementById(element);
     }
-    let label = _("inner_left_pannel");
-    label.addEventListener("click", function() {
-        let ajax = new XMLHttpRequest();
-        ajax.onload = function() {
-            if (ajax.status == 200 || ajax.readyState == 4) {
-                inner_pannel.innerHTML = ajax.responseText;
+    function get_data(find,type){
+            var xml=new XMLHttpRequest();
+            xml.onload=function(){
+                if(xml.readyState==4 || xml.status==200){
+                   handle_result(xml.responseText,type); 
+                }
             }
-        }
-        ajax.open("POST", "file.php", true);
-        ajax.send();
-    });
+            var data={};
+            data.find=find;
+            data.data_type=type;
+            data=JSON.stringify(data);
+            xml.open("POST","api.php",true);
+            xml.send(data);
+    }
+   function handle_result(result,type){
+   
+    if(result.trim()!=""){
+    var obj=JSON.parse(result);
+    if(!obj.logged_in ){
+        window.location="login.php";
+    }else{
+        alert(result);
+    }
+    }
+   }
+   get_data({},"user_info");
 </script>
