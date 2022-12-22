@@ -134,3 +134,19 @@
 </body>
 
 </html>
+<script type="text/javascript">
+    function _(element) {
+        return document.getElementById(element);
+    }
+    let label = _("inner_left_pannel");
+    label.addEventListener("click", function() {
+        let ajax = new XMLHttpRequest();
+        ajax.onload = function() {
+            if (ajax.status == 200 || ajax.readyState == 4) {
+                inner_pannel.innerHTML = ajax.responseText;
+            }
+        }
+        ajax.open("POST", "file.php", true);
+        ajax.send();
+    });
+</script>
