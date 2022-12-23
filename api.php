@@ -45,3 +45,7 @@ else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="contacts"){
   // user_info
   include("includes/settings.php");
  }
+ else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="save_settings"){
+  // user_info
+  include("includes/save_settings.php");
+ }

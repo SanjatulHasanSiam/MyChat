@@ -206,8 +206,10 @@
             case "user_info":
                 var username=_("username");
                 var email=_("email");
+                var profile_image=_("profile_image");
                 username.innerHTML=obj.username;
                 email.innerHTML=obj.email;
+                profile_image.src=obj.image;
                 break;
             case "contacts":
                 var inner_left_pannel=_("inner_left_pannel");
@@ -217,10 +219,16 @@
                 var inner_left_pannel=_("inner_left_pannel");
                 inner_left_pannel.innerHTML=obj.message;
                 break;
-            case "settings":
+                case "settings":
                 var inner_left_pannel=_("inner_left_pannel");
                 inner_left_pannel.innerHTML=obj.message;
                 break;
+                case "save_settings":
+                alert(obj.message);
+                get_data({},"user_info");
+                get_settings(true);
+                break;
+                
         }
     }
     }
@@ -243,3 +251,55 @@
     get_data({},"settings");
    }
 </script>
+<script type="text/javascript">
+            
+            function collect_data(){
+                var save_settings_button=_("save_settings_button");
+                save_settings_button.disabled=true;
+                save_settings_button.value="Loading... Please wait...";
+                var myForm=_("myForm");
+                var inputs=myForm.getElementsByTagName("INPUT");
+                var data={};
+            for(var i=inputs.length-1;i>=0;i--){
+                    var key=inputs[i].name;
+                    switch(key){
+                        case "username":
+                        data.username=inputs[i].value;
+                        break;   
+                        case "email":
+                            data.email=inputs[i].value;
+                        break;  
+                        case "gender":
+                            if(inputs[i].checked){
+                                data.gender=inputs[i].value;
+                            }
+                            break;
+                        case "password":
+                            data.password=inputs[i].value;
+                        break;  
+                        case "password2":
+                            data.password2=inputs[i].value;
+                        break;  
+                    }
+            }
+            send_data(data,"save_settings");
+            
+            }
+
+            function send_data(data,type){
+
+                var xml=new XMLHttpRequest();
+                xml.onload=function(){
+                    if(xml.readState==4 || xml.status==200){
+                        handle_result(xml.responseText);
+                        var save_settings_button=_("save_settings_button");
+                        save_settings_button.disabled=false;
+                        save_settings_button.value="Save Settings";
+                    } 
+                }
+                    data.data_type=type;
+                    var data_string=JSON.stringify(data);
+                    xml.open("POST","api.php",true);
+                    xml.send(data_string);
+            }
+        </script>
