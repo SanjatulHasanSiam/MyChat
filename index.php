@@ -127,7 +127,7 @@
     <div id="wrapper">
         <div id="left_pannel">
             <div id="user_info" style="padding: 10px;">
-                <img id="profile_image" src="ui/images/user_male.jpg" alt=""><br>
+                <img id="profile_image" src="ui/images/user_male.jpg" alt="" style="height:100px;width:100px;"><br>
                  <span id="username"> Username</span> <br>
                 <span id="email" style="font-size: 12 px; opacity:0.5;"> user@email.com</span>
                 <br><br><br>
@@ -313,8 +313,9 @@
                 var xml=new XMLHttpRequest();
                 xml.onload=function(){
                     if(xml.readState==4 || xml.status==200){
-                        alert(xml.responseText);
-                       
+                        //alert(xml.responseText);
+                        get_data({},"user_info");
+                        get_settings(true);
                         change_image_button.disabled=false;
                         change_image_button.innerHTML="Change Image";
                     } 
