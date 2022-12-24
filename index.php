@@ -302,4 +302,8 @@
                     xml.open("POST","api.php",true);
                     xml.send(data_string);
             }
+
+            function upload_profile_image(files){
+                alert(files[0].name);
+            }
         </script>

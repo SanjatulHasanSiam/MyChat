@@ -62,7 +62,10 @@ if(is_array($data)){
                 <div>
                 <img src="'.$image.'" 
                 style="width:200px;height:200px;margin:10px;">
-                <input type="button" value="Change Image" id="change_image_button" style="background-color:#9b9a80">
+                <label for="change_image_input" id="change_image_button" style="background-color:#9b9a80;display:inline-block;padding:10px;border-radius:5px;cursor:pointer;">
+                Change Image
+                </label>
+                <input type="file" id="change_image_input" style="display:none;" onchange="upload_profile_image(this.files)">
                 </div>
                 <form id="myForm" action="">
                     <input type="text" name="username" placeholder="Enter Username" value="'.$data->username.'"><br>
