@@ -252,7 +252,7 @@
    }
 </script>
 <script type="text/javascript">
-            
+            var CURRENT_CHAT_USER="";
             function collect_data(){
                 var save_settings_button=_("save_settings_button");
                 save_settings_button.disabled=true;
@@ -326,4 +326,33 @@
                     xml.open("POST","uploader.php",true);
                     xml.send(myform);
             }
+            function handle_drag_and_drop(e){
+                if(e.type=="dragover"){
+                    e.preventDefault();
+                    e.target.className="dragging";
+                }else if(e.type=="drop"){
+                    e.preventDefault();
+                    e.target.className="";
+                    upload_profile_image(e.dataTransfer.files);
+                }
+                else if(e.type=="dragleave"){
+                    e.preventDefault();
+                    e.target.className="";
+                }
+                else{
+                    e.target.className="";
+                }
+            }
+            function start_chat(e){
+               var userid=e.target.getAttribute("userid");
+               if(e.target.id== ""){
+                userid=e.target.parentNode.getAttribute("userid");
+               }
+               CURRENT_CHAT_USER=userid;
+                var radio_chat=_("radio_chat");
+                radio_chat.checked=true;
+                get_data({userid:CURRENT_CHAT_USER},"chats");
+            }
+
+
         </script>

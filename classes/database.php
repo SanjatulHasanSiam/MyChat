@@ -67,5 +67,21 @@ public function generate_id($max){
     }
     return $rand;
 }
+public function check_email($email){
+  $servername = "localhost";
+$username = "username";
+$password = "";
+    $db = "mychat_db";
 
+// Create connection
+$conn = new mysqli($servername, $username, $password,$db);
+
+    $sql = "SELECT * FROM `users` WHERE email= '$email'";
+    $res = mysqli_query($conn,$sql);
+    $row = mysqli_fetch_assoc($res);
+    if(empty($row)){
+      return false;
+    }
+    return true;
+}
 }

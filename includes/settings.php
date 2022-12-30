@@ -56,11 +56,14 @@ if(is_array($data)){
                 background-color: #ecaf91; color: white;  
                 display:none;
             }
+            .dragging{
+                border:dashed 2px #aaa;
+            }
         </style>
                 <div id="error" style="">error</div>
                 <div style="display:flex;">
                 <div>
-                <img src="'.$image.'" 
+                <img ondragover="handle_drag_and_drop(event) ondrop="handle_drag_and_drop(event) ondragleave="handle_drag_and_drop(event)" src="'.$image.'" 
                 style="width:200px;height:200px;margin:10px;">
                 <label for="change_image_input" id="change_image_button" style="background-color:#9b9a80;display:inline-block;padding:10px;border-radius:5px;cursor:pointer;">
                 Change Image
@@ -83,12 +86,15 @@ if(is_array($data)){
                 </form>
                 </div>
         ';
-}
+
     $info->message = $mydata;
     $info->data_type = "contacts";
     echo json_encode($info);
-  die;
-   $info->message = "No contacts were found";
-   $info->data_type = "error";
-   echo json_encode($info);
+}else{
+    $info->message = "No contacts were found";
+    $info->data_type = "error";
+    echo json_encode($info);
+}
+  
+ 
  ?>

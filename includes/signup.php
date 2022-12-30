@@ -49,19 +49,29 @@ else{
    }
  }
  if ($Error == "") {
-   $query = "insert into users (userid,username,gender,email,password,date) values (:userid,:username,:gender,:email,:password,:date)";
-   $result = $DB->write($query,$data);
-   if ($result) {
-    $info->message = "Your profile was created.<br>";
-    $info->data_type = "info";
-    echo json_encode($info);
+
+  $res=$DB->check_email($email);
+if($res==false){
+  $query = "insert into users (userid,username,gender,email,password,date) values (:userid,:username,:gender,:email,:password,:date)";
+  $result = $DB->write($query,$data);
+  if ($result) {
+   $info->message = "Your profile was created.<br>";
+   $info->data_type = "info";
+   echo json_encode($info);
+   
+  } else {
     
-   } else {
-     
-     $info->message = "Sorry, your profile was not created.";
-     $info->data_type = "error";
-     echo json_encode($info);
-   }
+    $info->message = "Sorry, your profile was not created.";
+    $info->data_type = "error";
+    echo json_encode($info);
+  }
+}
+else {
+  $info->message = "Email already exsits";
+  $info->data_type = "error";
+  echo json_encode($info);
+}
+
   }else{
    
   $info->message = $Error;
