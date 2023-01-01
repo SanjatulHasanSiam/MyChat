@@ -114,6 +114,20 @@
         height: 100px;
         border-radius: 50%;
     }
+    #active_contact{
+        height: 70px;
+        margin: 10px;
+       border:solid thin #aaa;
+       padding: 2px;
+      
+    }
+    #active_contact img{
+        width:70px;
+        height: 70px;
+        float:left;
+        border-radius: 5%;
+        margin:2px;
+    }
     .loader_on{
         position: absolute;
         width: 30%;
@@ -241,6 +255,9 @@
   
    }
    get_data({},"user_info");
+   get_data({},"contacts");
+   var radio_contacts=_("radio_contacts");
+   radio_contacts.checked=true;
    function get_contacts(e){
     get_data({},"contacts");
    }
