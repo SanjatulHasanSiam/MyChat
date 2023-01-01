@@ -26,10 +26,11 @@
        $image = $row->image;
      }
      $mydata .= "
-      <div userid='$row->userid' id='contact' onclick='start_chat(event)'>
+      <div userid='$row->userid'    id='contact'     onclick='start_chat(event)'>
         <img src='$image'><br>
             $row->username
  </div>";
+ 
    }
  }
  $mydata .= '

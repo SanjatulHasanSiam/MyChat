@@ -21,6 +21,7 @@
     #wrapper {
         max-width: 900px;
         min-height: 500px;
+        max-height: 630px;
         display: flex;
         margin: auto;
         color: white;
@@ -81,6 +82,7 @@
         background-color: #383e48;
         flex: 1;
         min-height: 430px;
+        max-height: 530px;
     }
     
     #inner_right_pannel {
@@ -88,6 +90,7 @@
         flex: 2;
         min-height: 430px;
         transition: all 2s ease;
+        max-height: 530px;
     }
     
     #radio_contacts:checked~#inner_right_pannel {
@@ -122,11 +125,75 @@
       
     }
     #active_contact img{
-        width:70px;
-        height: 70px;
+        width:65px;
+        height: 65px;
         float:left;
         border-radius: 5%;
         margin:2px;
+    }
+
+    #message_left{
+        height: 70px;
+        margin: 10px;
+       padding: 2px;
+       padding-right: 10px;
+       background-color: #eee;
+       color:#444;
+      float: left;
+      box-shadow: 0px 0px 10px #aaa;
+      border-bottom-left-radius: 50%;
+      position:relative;
+      width:80%;
+    }
+    #message_left img{
+        width:60px;
+        height: 60px;
+        float:left;
+        border-radius: 50%;
+        margin:2px;
+        border:solid 2px white;
+    }
+    #message_left div{
+        width:20px;
+        height: 20px;
+        border-radius: 50%;
+        border:solid 2px white;
+        background-color: #34474f;
+        position: absolute;
+        left:-10px;
+        top:20px;
+    }
+
+    #message_right{
+        height: 70px;
+        margin: 10px;
+       padding: 2px;
+       padding-right: 10px;
+       background-color: #fbffee;
+       color:#444;
+      float: right;
+      box-shadow: 0px 0px 10px #aaa;
+      border-bottom-right-radius: 50%;
+      position:relative;
+      width:80%;
+    }
+    #message_right img{
+        width:60px;
+        height: 60px;
+        float:left;
+        border-radius: 50%;
+        margin:2px;
+        border:solid 2px white;
+    }
+    #message_right div{
+        width:20px;
+        height: 20px;
+        border-radius: 50%;
+        border:solid 2px white;
+        background-color: #34474f;
+        position: absolute;
+        right:-10px;
+        top:20px;
     }
     .loader_on{
         position: absolute;
@@ -212,6 +279,8 @@
    function handle_result(result,type){
    
     if(result.trim()!=""){
+    var inner_right_pannel=_("inner_right_pannel");
+    inner_right_pannel.style.overflow="visible";
     var obj=JSON.parse(result);
     if(typeof(obj.logged_in)!="undefined" && !obj.logged_in ){
         window.location="login.php";
@@ -227,11 +296,14 @@
                 break;
             case "contacts":
                 var inner_left_pannel=_("inner_left_pannel");
+               
+                inner_right_pannel.style.overflow="hidden";
                 inner_left_pannel.innerHTML=obj.message;
                 break;
             case "chats":
                 var inner_left_pannel=_("inner_left_pannel");
-                inner_left_pannel.innerHTML=obj.message;
+                inner_left_pannel.innerHTML=obj.user;
+                inner_right_pannel.innerHTML=obj.messages;
                 break;
                 case "settings":
                 var inner_left_pannel=_("inner_left_pannel");
