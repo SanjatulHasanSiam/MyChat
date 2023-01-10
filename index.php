@@ -137,13 +137,15 @@
         margin: 10px;
        padding: 2px;
        padding-right: 10px;
-       background-color: #eee;
-       color:#444;
+       background-color: #c979d5;
+       color:white;
       float: left;
       box-shadow: 0px 0px 10px #aaa;
       border-bottom-left-radius: 50%;
+      border-top-right-radius: 30%;
       position:relative;
       width:80%;
+      min-width: 200px;
     }
     #message_left img{
         width:60px;
@@ -165,17 +167,19 @@
     }
 
     #message_right{
-        height: 70px;
-        margin: 10px;
-       padding: 2px;
-       padding-right: 10px;
-       background-color: #fbffee;
-       color:#444;
+      height: 70px;
+      margin: 10px;
+      padding: 2px;
+      padding-right: 10px;
+      background-color: #fbffee;
+      color:#444;
       float: right;
       box-shadow: 0px 0px 10px #aaa;
       border-bottom-right-radius: 50%;
+      border-top-left-radius: 30%;
       position:relative;
       width:80%;
+      min-width: 200px;
     }
     #message_right img{
         width:60px;
@@ -277,7 +281,7 @@
             xml.send(data);
     }
    function handle_result(result,type){
-   
+//alert(result);
     if(result.trim()!=""){
     var inner_right_pannel=_("inner_right_pannel");
     inner_right_pannel.style.overflow="visible";
@@ -338,6 +342,18 @@
    }
    function get_settings(e){
     get_data({},"settings");
+   }
+   function send_message(e){
+    var message_text=_("message_text");
+    if(message_text.value.trim() ==""){
+        alert("Please enter something to send.");
+        return;
+    }
+    //alert(message_text.value);
+   get_data({
+    message:message_text.value.trim(),
+    userid:CURRENT_CHAT_USER
+   },"send_message");
    }
 </script>
 <script type="text/javascript">

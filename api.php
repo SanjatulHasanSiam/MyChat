@@ -49,3 +49,55 @@ else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="contacts"){
   // user_info
   include("includes/save_settings.php");
  }
+ else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="send_message"){
+  // $info->message = $DATA_OBJ;
+  // echo json_encode($info);
+  include("includes/send_message.php");
+ }
+ function message_left($data,$row){
+  $img= "";
+  if(empty($row->image)){
+    $gender = $row->gender;
+    if($gender=="Male"){
+      $img = "ui/images/user_male.jpg";
+    }
+    else{
+      $img = "ui/images/user_female.jpg";
+    }
+  }
+  else{
+    $img=$row->image;
+  }
+  return "
+  <div id='message_left'>
+  <div></div>
+    <img src='$img'>
+       <b> $row->username</b><br>
+       $data->message<br><br>
+        <span style='font-size:11px;color:white;'>20 Jan 2022 10:00 AM</span>
+  </div>";
+ }
+
+ function message_right($data,$row){
+  $img= "";
+  if(empty($row->image)){
+    $gender = $row->gender;
+    if($gender=="Male"){
+      $img = "ui/images/user_male.jpg";
+    }
+    else{
+      $img = "ui/images/user_female.jpg";
+    }
+  }
+  else{
+    $img=$row->image;
+  }
+  return "
+  <div id='message_right'>
+  <div></div>
+    <img src='$img' style='float:right;'>
+       <b> $row->username</b><br>
+       $data->message<br><br>
+        <span style='font-size:11px;color:#999;'>20 Jan 2022 10:00 AM</span>
+  </div>";
+ }
