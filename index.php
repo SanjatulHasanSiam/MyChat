@@ -308,6 +308,13 @@
                 var inner_left_pannel=_("inner_left_pannel");
                 inner_left_pannel.innerHTML=obj.user;
                 inner_right_pannel.innerHTML=obj.messages;
+                var messages_holder=_("messages_holder");
+                setTimeout(function(){
+                    messages_holder.scrollTo(0,messages_holder.scrollHeight);
+                    var message_text=_("message_text");
+                    message_text.focus();
+                },0);
+
                 break;
                 case "settings":
                 var inner_left_pannel=_("inner_left_pannel");
@@ -355,6 +362,11 @@
     userid:CURRENT_CHAT_USER
    },"send_message");
    }
+   function enter_pressed(event){
+                if(event.keyCode==13){
+                    send_message(event);
+                }
+            }
 </script>
 <script type="text/javascript">
             var CURRENT_CHAT_USER="";
@@ -459,5 +471,6 @@
                 get_data({userid:CURRENT_CHAT_USER},"chats");
             }
 
+         
 
         </script>

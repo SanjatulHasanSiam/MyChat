@@ -24,25 +24,8 @@ if(is_array($result)){
   $messages = "
 <div id='messages_holder_parent' style='height:630px;'>
 <div id='messages_holder' style='height:490px;overflow-y:scroll;'>"; 
-// $messages .=message_left($row);
-// $messages .=message_right($row);
-// $messages .=message_left($row);
-// $messages .=message_right($row);
-// $messages .=message_left($row);
-// $messages .=message_right($row);
-// $messages .=message_left($row);
-// $messages .=message_right($row);
-// $messages .=message_left($row);
-// $messages .=message_right($row);
-$messages .="</div>
-<div style='display:flex;width:100%;height:40px;margin:5px;cursor:pointer;'>
-<label for='message_file'><img src='ui/icons/clip.png' style='opacity:0.8;width:30px;margin:5px;cursor:pointer;'></label>
-<input id='message_file' type='file' name='file' style='display:none;'>
-<input id='message_text' style='flex:6;border:solid thin #ccc;border-bottom:none;font-size:14px;padding:4px;' type='text' placeholder='Type your message here...'>
-<input style='flex:1:cursor:pointer;' type='button' value='Send' onclick='send_message(event)'>
-</div>
-</div>
-";
+
+$messages .=message_controls();
     $info->user = $mydata;
     $info->messages = $messages;
     $info->data_type = "chats";
