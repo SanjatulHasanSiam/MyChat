@@ -304,6 +304,10 @@
                 inner_right_pannel.style.overflow="hidden";
                 inner_left_pannel.innerHTML=obj.message;
                 break;
+            case "chats_refresh":
+                var messages_holder=_("messages_holder");
+                messages_holder.innerHTML=obj.messages;
+                break;
             case "chats":
                 var inner_left_pannel=_("inner_left_pannel");
                 inner_left_pannel.innerHTML=obj.user;
@@ -367,6 +371,12 @@
                     send_message(event);
                 }
             }
+
+    setInterval(function(){
+if(CURRENT_CHAT_USER != ""){
+    get_data({userid:CURRENT_CHAT_USER},"chats_refresh");
+}
+    },5000);
 </script>
 <script type="text/javascript">
             var CURRENT_CHAT_USER="";

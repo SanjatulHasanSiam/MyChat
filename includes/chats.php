@@ -3,6 +3,12 @@ $arr['userid'] = "null";
 if(isset( $DATA_OBJ->find->userid)){
   $arr['userid'] = $DATA_OBJ->find->userid;
 }
+
+$refresh = false;
+if($DATA_OBJ->data_type=="chats_refresh"){
+  $refresh = true;
+}
+
 $sql = "select * from users where userid = :userid limit 1";
  $result=$DB->read($sql,$arr);
 if(is_array($result)){
@@ -15,20 +21,48 @@ if(is_array($result)){
       $image = $row->image;
     }
   $row->image = $image;
+
+  if(!$refresh){
     $mydata = "Now chatting with:<br>
     <div id='active_contact'>
       <img src='$image'>
           $row->username
 </div>";
-
+  }
+  
+  if(!$refresh){
   $messages = "
 <div id='messages_holder_parent' style='height:630px;'>
 <div id='messages_holder' style='height:490px;overflow-y:scroll;'>"; 
+}
+//read from db
+$a['sender']=$_SESSION['userid'];
+  $a['receiver'] = $arr['userid'];
+  $sql = "select * from messages where (sender = :sender && receiver = :receiver) OR (receiver  = :sender && sender = :receiver) order by id desc limit 10";
+$result2=$DB->read($sql,$a);
+ if (is_array($result2)) {
+    $result2 = array_reverse($result2);
+    foreach($result2 as $data){
+      $myuser = $DB->get_user($data->sender);
 
-$messages .=message_controls();
+      if($_SESSION['userid']==$data->sender){
+        $messages .= message_right($data,$myuser);
+      }
+      else{
+        $messages .= message_left($data,$myuser);
+      }
+    }
+ }
+
+  if (!$refresh) {
+    $messages .= message_controls();
+  }
     $info->user = $mydata;
     $info->messages = $messages;
     $info->data_type = "chats";
+  if ($refresh) {
+    $info->data_type = "chats_refresh";
+  }
     echo json_encode($info);
 }else{
 //user not found

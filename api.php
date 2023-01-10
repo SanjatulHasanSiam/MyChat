@@ -37,7 +37,7 @@ else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="contacts"){
   // user_info
   include("includes/contacts.php");
  }
- else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="chats"){
+ else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="chats" || $DATA_OBJ->data_type=="chats_refresh"){
   // user_info
   include("includes/chats.php");
  }

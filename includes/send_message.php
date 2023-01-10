@@ -59,9 +59,7 @@ $result2=$DB->read($sql,$a);
         $messages .= message_left($data,$myuser);
       }
     }
-  
  }
-
 
 $messages .=message_controls();
     $info->user = $mydata;
