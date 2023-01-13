@@ -37,7 +37,7 @@ if(is_array($result)){
 //read from db
 $a['sender']=$_SESSION['userid'];
   $a['receiver'] = $arr['userid'];
-  $sql = "select * from messages where (sender = :sender && receiver = :receiver) OR (receiver  = :sender && sender = :receiver) order by id desc limit 10";
+  $sql = "select * from messages where (sender = :sender && receiver = :receiver && deleted_sender=0) OR (receiver  = :sender && sender = :receiver && deleted_receiver=0) order by id desc limit 10";
 $result2=$DB->read($sql,$a);
  if (is_array($result2)) {
     $result2 = array_reverse($result2);

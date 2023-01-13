@@ -196,7 +196,24 @@
         border-radius: 50%;
         margin:0px;
         border:none;
+        
 
+    }
+    #message_right #trash{
+        width:20px;
+        height: 20px;
+        position:absolute;
+        top:1px;
+        left:7px;
+        cursor:pointer;
+    }
+    #message_left #trash{
+        width:20px;
+        height: 20px;
+        position:absolute;
+        top:1px;
+        right:7px;
+        cursor:pointer;
     }
     #message_right div{
         width:20px;
@@ -231,7 +248,7 @@
                     <label id="label_settings" for="radio_settings">Settings<img src="ui/icons/settings.png" alt=""></label>
                     <label id="label_blocked" for="radio_blocked">Blocked Users<img src="ui/icons/settings.png" alt=""></label>
 
-                    <label id="logout" for="radio_logout">Logout<img src="ui/icons/logout1.png" alt=""></label>
+                    <label id="logout" for="radio_logout">Logout<img src="ui/icons/contact-icon.png" alt=""></label>
                 </div>
 
             </div>
@@ -415,7 +432,18 @@ if(CURRENT_CHAT_USER != ""){
 function set_seen(e){
     SEEN_STATUS=true;
 }
-
+function delete_message(e){
+    if(confirm("Are you sure you want to delete this message?")){
+        var msgid=e.target.getAttribute("msgid");
+        get_data({
+            rowid:msgid
+        },"delete_message");
+        get_data({
+        userid:CURRENT_CHAT_USER,
+        seen:SEEN_STATUS
+    },"chats_refresh");
+    }
+}
 </script>
 <script type="text/javascript">
             var CURRENT_CHAT_USER="";

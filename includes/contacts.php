@@ -1,5 +1,5 @@
  <?php
- sleep(1.5);
+ sleep(0.75);
  $myid = $_SESSION['userid'];
  $sql = "select * from users where userid !='$myid' limit 10";
  $myusers=$DB->read($sql,[]);
