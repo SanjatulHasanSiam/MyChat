@@ -444,8 +444,10 @@
     }
 
     setInterval(function(){
-if(CURRENT_CHAT_USER != ""){
+        var radio_chat=_("radio_chat");
+if(CURRENT_CHAT_USER != "" && radio_chat.checked){
   //  console.log(SEEN_STATUS);
+  
     get_data({
         userid:CURRENT_CHAT_USER,
         seen:SEEN_STATUS
