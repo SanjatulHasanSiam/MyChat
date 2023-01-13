@@ -133,7 +133,7 @@
     }
 
     #message_left{
-        height: 70px;
+      
         margin: 10px;
        padding: 2px;
        padding-right: 10px;
@@ -167,7 +167,7 @@
     }
 
     #message_right{
-      height: 70px;
+      
       margin: 10px;
       padding: 2px;
       padding-right: 10px;
@@ -342,8 +342,14 @@
                 if(typeof obj.new_message != 'undefined'){
                     if(obj.new_message){
                         received_audio.play();
+                        setTimeout(function(){
+                        messages_holder.scrollTo(0,messages_holder.scrollHeight);
+                        var message_text=_("message_text");
+                        message_text.focus();
+                },100);
                     }
                 }
+             
                 break;
             case "send_message":
                 sent_audio.play();
@@ -369,6 +375,9 @@
                 var inner_left_pannel=_("inner_left_pannel");
                 inner_left_pannel.innerHTML=obj.message;
                 break;
+                case "send_image":
+                    alert(obj.message);
+                    break;
                 case "save_settings":
                 alert(obj.message);
                 get_data({},"user_info");
@@ -510,7 +519,14 @@ function delete_thread(e){
             }
 
             function upload_profile_image(files){
-                
+                var filename=files[0].name;
+                filename=filename.toLowerCase();
+                var regex = new RegExp('[^.]+$');
+                var extenstion=filename.match(regex);
+                if(!(extenstion=='jpg' || extenstion=='png' || extenstion=='jpeg')){
+                    alert('This file type is not allowed');
+                    return;
+                }
                 var change_image_button=_("change_image_button");
                 change_image_button.disabled=true;
                 change_image_button.innerHTML="Uploading Image...";
@@ -561,5 +577,30 @@ function delete_thread(e){
             }
 
          
-
+            function send_image(files){
+                var filename=files[0].name;
+                filename=filename.toLowerCase();
+                var regex = new RegExp('[^.]+$');
+                var extenstion=filename.match(regex);
+                if(!(extenstion=='jpg' || extenstion=='png' || extenstion=='jpeg')){
+                    alert('This file type is not allowed');
+                    return;
+                }
+                var myform=new FormData();
+                var xml=new XMLHttpRequest();
+                xml.onload=function(){
+                    if(xml.readState==4 || xml.status==200){
+                        handle_result(xml.responseText,"send_image");
+                        get_data({
+                            userid:CURRENT_CHAT_USER,
+                            seen:SEEN_STATUS
+                        },"chats_refresh");
+                    } 
+                }
+                myform.append('file',files[0]);
+                myform.append('data_type','send_image');
+                myform.append('userid',CURRENT_CHAT_USER);
+                    xml.open("POST","uploader.php",true);
+                    xml.send(myform);
+            }
         </script>

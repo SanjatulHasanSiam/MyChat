@@ -66,15 +66,19 @@ else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="contacts"){
      if(file_exists($row->image)){
        $image = $row->image;
      }
-  return "
+  $display= "
   <div id='message_left'>
   <div></div>
-    <img id='prof_img' src='$image'>
-       <b> $row->username</b><br>
-       $data->message<br><br>
-        <span style='font-size:11px;color:white;'>".date("jS M Y H:i:s a",strtotime($data->date))."</span>
+    <img id='prof_left' src='$image'>
+       <b> $row->username</b><br><br>
+       $data->message<br><br>";
+  if ($data->files != "" && file_exists($data->files)) {
+    $display .= "<img class='message_profile'  src='$data->files'style='width:100%;height:100%; border-radius:0%;'><br><br>";
+  }
+       $display.= " <span style='font-size:11px;color:white;'>".date("jS M Y H:i:s a",strtotime($data->date))."</span>
         <img id='trash' onclick='delete_message(event)' msgid='$data->id' src='ui/icons/trash.png'>
   </div>";
+  return $display;
  }
 
  function message_right($data,$row){
@@ -82,22 +86,25 @@ else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="contacts"){
      if(file_exists($row->image)){
        $image = $row->image;
      }
-  $a= "
+  $display= "
   <div id='message_right'>
   <div>";
   if($data->seen){
-    $a.="<img id='prof_img' src='ui/icons/blue check mark.png' style=''>";
+    $display.="<img src='ui/icons/blue check mark.png' style=''>";
   }else if($data->received){
-    $a.="<img src='ui/icons/check mark.png' style=''>";
+    $display.="<img src='ui/icons/check mark.png' style=''>";
   }
-  $a.=" </div>
+  $display.=" </div>
     <img src='$image' style='float:right;'>
-       <b> $row->username</b><br>
-       $data->message<br><br>
-        <span style='font-size:11px;color:#888;'>".date("jS M Y H:i:s a",strtotime($data->date))."</span>
+       <b> $row->username</b><br><br>
+       $data->message<br><br>";
+       if($data->files != "" && file_exists($data->files)){
+      $display .= "<img class='message_profile'  src='$data->files'style='width:100%;height:100%; border-radius:0%;'><br><br>";
+       }
+       $display.="<span style='font-size:11px;color:#888;'>".date("jS M Y H:i:s a",strtotime($data->date))."</span>
         <img id='trash' onclick='delete_message(event)' msgid='$data->id' src='ui/icons/trash.png'>
   </div>";
-  return $a;
+  return $display;
  }
 
  function message_controls(){
@@ -106,7 +113,7 @@ else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="contacts"){
   <span style='color:purple;cursor:pointer;' onclick='delete_thread(event)' >Delete this conversation</span>
   <div style='display:flex;width:100%;height:40px;margin:5px;cursor:pointer;'>
   <label for='message_file'><img src='ui/icons/clip.png' style='opacity:0.8;width:30px;margin:5px;cursor:pointer;'></label>
-  <input id='message_file' type='file' name='file' style='display:none;'>
+  <input id='message_file' type='file' name='file' style='display:none;' onchange='send_image(this.files)'>
   <input id='message_text' onkeyup='enter_pressed(event)'  style='flex:6;border:solid thin #ccc;border-bottom:none;font-size:14px;padding:4px;' type='text' placeholder='Type your message here...'>
   <input style='flex:1:cursor:pointer;' type='button' value='Send' onclick='send_message(event)'>
   </div>

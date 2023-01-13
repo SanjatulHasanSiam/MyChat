@@ -6,8 +6,6 @@ if(isset( $DATA_OBJ->find->userid)){
 $sql = "select * from users where userid = :userid limit 1";
  $result=$DB->read($sql,$arr);
 if(is_array($result)){
-//user found
-    //$mydata = $DATA_OBJ->find->userid;
     $arr['message']=$DATA_OBJ->find->message;
     $arr['date']=date("Y-m-d H:i:s");
     $arr['sender'] = $_SESSION['userid'];
