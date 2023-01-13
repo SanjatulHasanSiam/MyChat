@@ -64,12 +64,12 @@ $result2=$DB->read($sql,$a);
 $messages .=message_controls();
     $info->user = $mydata;
     $info->messages = $messages;
-    $info->data_type = "chats";
+    $info->data_type = "send_message";
     echo json_encode($info);
 }else{
 //user not found
 $info->message = "That contact was not found";
-$info->data_type = "chats";
+$info->data_type = "send_message";
 echo json_encode($info);
 }
  function get_random_string_max($length){

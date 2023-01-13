@@ -196,7 +196,7 @@
         border-radius: 50%;
         margin:0px;
         border:none;
-        
+
     }
     #message_right div{
         width:20px;
@@ -260,6 +260,9 @@
 </html>
 <script type="text/javascript">
     // var CURRENT_CHAT_USER="";
+    var sent_audio=new Audio("ui/sounds/message_sent.mp3");
+    var received_audio=new Audio("ui/sounds/message_received.mp3");
+
     var SEEN_STATUS=false;
     function _(element) {
         return document.getElementById(element);
@@ -319,7 +322,14 @@
                 SEEN_STATUS=false;
                 var messages_holder=_("messages_holder");
                 messages_holder.innerHTML=obj.messages;
+                if(typeof obj.new_message != 'undefined'){
+                    if(obj.new_message){
+                        received_audio.play();
+                    }
+                }
                 break;
+            case "send_message":
+                sent_audio.play();
             case "chats":
                 SEEN_STATUS=false;
                 var inner_left_pannel=_("inner_left_pannel");
@@ -331,8 +341,13 @@
                     var message_text=_("message_text");
                     message_text.focus();
                 },100);
-
+                if(typeof obj.new_message != 'undefined'){
+                    if(obj.new_message){
+                        received_audio.play();
+                    }
+                }
                 break;
+                
                 case "settings":
                 var inner_left_pannel=_("inner_left_pannel");
                 inner_left_pannel.innerHTML=obj.message;
@@ -378,6 +393,7 @@
     message:message_text.value.trim(),
     userid:CURRENT_CHAT_USER
    },"send_message");
+   
    }
    function enter_pressed(event){
                 if(event.keyCode==13){

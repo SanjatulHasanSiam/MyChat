@@ -28,6 +28,7 @@ if(is_array($result)){
 </div>";
   }
   $messages = "";
+  $new_message = false;
   if(!$refresh){
   $messages = "
 <div id='messages_holder_parent' onclick='set_seen(event)' style='height:630px;'>
@@ -43,6 +44,10 @@ $result2=$DB->read($sql,$a);
     foreach($result2 as $data){
 
       $myuser = $DB->get_user($data->sender);
+      //check for new messages
+      if($data->received==0 && $data->receiver == $_SESSION['userid']){
+        $new_message = true;
+      }
       if($data->receiver == $_SESSION['userid'] && $data->received == 1 && $seen){
         $DB->Write("update messages set seen = 1 where id = '$data->id' limit 1");
       }
@@ -64,6 +69,7 @@ $result2=$DB->read($sql,$a);
     $info->user = $mydata;
     $info->messages = $messages;
     $info->data_type = "chats";
+    $info->new_message = $new_message;
   if ($refresh) {
     $info->data_type = "chats_refresh";
   }
