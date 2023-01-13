@@ -443,15 +443,17 @@
                 SEEN_STATUS=true;
     }
 
-    setInterval(function(){
-        var radio_chat=_("radio_chat");
+setInterval(function(){
+var radio_chat=_("radio_chat");
+var radio_contacts=_("radio_contacts");
 if(CURRENT_CHAT_USER != "" && radio_chat.checked){
-  //  console.log(SEEN_STATUS);
-  
     get_data({
         userid:CURRENT_CHAT_USER,
         seen:SEEN_STATUS
     },"chats_refresh");
+}
+if(radio_contacts.checked){
+    get_data({},"contacts");
 }
     },5000);
 
