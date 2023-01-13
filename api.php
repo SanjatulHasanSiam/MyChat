@@ -73,7 +73,7 @@ else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="contacts"){
        <b> $row->username</b><br><br>
        $data->message<br><br>";
   if ($data->files != "" && file_exists($data->files)) {
-    $display .= "<img class='message_profile'  src='$data->files'style='width:100%;height:100%; border-radius:0%;'><br><br>";
+    $display .= "<img class='message_profile'  src='$data->files'style='width:100%;height:100%; border-radius:0%;cursor:pointer;' onclick='image_show(event)'><br><br>";
   }
        $display.= " <span style='font-size:11px;color:white;'>".date("jS M Y H:i:s a",strtotime($data->date))."</span>
         <img id='trash' onclick='delete_message(event)' msgid='$data->id' src='ui/icons/trash.png'>
@@ -99,7 +99,7 @@ else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="contacts"){
        <b> $row->username</b><br><br>
        $data->message<br><br>";
        if($data->files != "" && file_exists($data->files)){
-      $display .= "<img class='message_profile'  src='$data->files'style='width:100%;height:100%; border-radius:0%;'><br><br>";
+      $display .= "<img class='message_profile'  src='$data->files'style='width:100%;height:100%; border-radius:0%;cursor:pointer;' onclick='image_show(event)'><br><br>";
        }
        $display.="<span style='font-size:11px;color:#888;'>".date("jS M Y H:i:s a",strtotime($data->date))."</span>
         <img id='trash' onclick='delete_message(event)' msgid='$data->id' src='ui/icons/trash.png'>

@@ -232,6 +232,20 @@
     .loader_off{
         display:none;
     }
+
+    .image_on{
+        position: absolute;
+        
+        margin:auto;
+        z-index:10;
+        top:80px;
+        left:100px;
+        cursor:pointer;
+
+    }
+    .image_off{
+        display:none;
+    }
 </style>
 
 <body>
@@ -256,6 +270,7 @@
         <div id="right_pannel">
                 <div id="header">
                 <div id="loader_holder" class="loader_on"><img src="ui/icons/giphy.gif" style="width:70px;"></div>
+                <div id='image_viewer' class='image_off' onclick='close_image(event)'></div>
                     My Chat
                 </div>
                 <div id="container" style="display:flex">
@@ -602,5 +617,14 @@ function delete_thread(e){
                 myform.append('userid',CURRENT_CHAT_USER);
                     xml.open("POST","uploader.php",true);
                     xml.send(myform);
+            }
+            function close_image(event){
+                event.target.className="image_off";
+            }
+            function image_show(event){
+                var image=event.target.src;
+                var image_viewer=_("image_viewer");
+                image_viewer.innerHTML="<img src='"+image+"'style='width:100%;'>";
+                image_viewer.className='image_on';
             }
         </script>
