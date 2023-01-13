@@ -84,8 +84,8 @@
 
             <div style="padding:10px">
                 <br>Gender: <br>
-                <input type="radio" value="Male" name="gender_male" id="">Male <br>
-                <input type="radio" value="Female" name="gender_female" id="">Female <br>
+                <input type="radio" value="Male" name="gender" id="">Male <br>
+                <input type="radio" value="Female" name="gender" id="">Female <br>
             </div>
 
             <input type="password" name="password" placeholder="Enter new password"><br>
@@ -119,8 +119,7 @@
                 case "email":
                     data.email=inputs[i].value;
                  break;  
-                case "gender_male":
-                case "gender_female":
+                case "gender":
                     if(inputs[i].checked){
                         data.gender=inputs[i].value;
                     }
@@ -142,7 +141,6 @@
         var xml=new XMLHttpRequest();
         xml.onload=function(){
             if(xml.readState==4 || xml.status==200){
-              
                 handle_result(xml.responseText);
                 signup_button.disabled=false;
                 signup_button.value="Sign Up";
@@ -154,8 +152,10 @@
             xml.send(data_string);
     }
     function handle_result(result){
+        
         var data=JSON.parse(result);
         if(data.data_type=="info"){
+            alert(data.message);
             window.location="index.php";
         }else{
             var error=_("error");
