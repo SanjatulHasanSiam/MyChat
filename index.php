@@ -444,6 +444,18 @@ function delete_message(e){
     },"chats_refresh");
     }
 }
+function delete_thread(e){
+    if(confirm("Are you sure you want to delete the whole conversation?")){
+        get_data({
+            userid:CURRENT_CHAT_USER
+        },"delete_thread");
+        get_data({
+        userid:CURRENT_CHAT_USER,
+        seen:SEEN_STATUS
+    },"chats_refresh");
+    }
+}
+
 </script>
 <script type="text/javascript">
             var CURRENT_CHAT_USER="";

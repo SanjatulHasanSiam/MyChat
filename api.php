@@ -57,6 +57,10 @@ else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="contacts"){
   include("includes/delete_message.php");
  }
 
+ else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="delete_thread"){
+  include("includes/delete_thread.php");
+ }
+ 
  function message_left($data,$row){
   $image =($row->gender=="Male")? 'ui/images/user_male.jpg':'ui/images/user_female.jpg';
      if(file_exists($row->image)){
@@ -99,7 +103,7 @@ else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="contacts"){
  function message_controls(){
   return "
   </div>
-  <span style='color:purple;cursor:pointer;'>Delete this conversation</span>
+  <span style='color:purple;cursor:pointer;' onclick='delete_thread(event)' >Delete this conversation</span>
   <div style='display:flex;width:100%;height:40px;margin:5px;cursor:pointer;'>
   <label for='message_file'><img src='ui/icons/clip.png' style='opacity:0.8;width:30px;margin:5px;cursor:pointer;'></label>
   <input id='message_file' type='file' name='file' style='display:none;'>
