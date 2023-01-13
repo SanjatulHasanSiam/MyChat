@@ -49,17 +49,18 @@ else{
    }
  }
  if ($Error == "") {
-
-  $res=$DB->check_email($email);
-if($res==false){
+  $arr['email'] = $DATA_OBJ->email;
+  $sql = "select * from users where email= :email limit 1";
+  $res=$DB->read($sql,$arr);
+  if(!is_array($res)){
   $query = "insert into users (userid,username,gender,email,password,date) values (:userid,:username,:gender,:email,:password,:date)";
   $result = $DB->write($query,$data);
-  if ($result) {
-   $info->message = "Your profile was created.<br>";
-   $info->data_type = "info";
-   echo json_encode($info);
-   
-  } else {
+    if ($result) {
+      $info->message = "Your profile was created.<br>";
+      $info->data_type = "info";
+      echo json_encode($info);
+    }
+  else {
     
     $info->message = "Sorry, your profile was not created.";
     $info->data_type = "error";

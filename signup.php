@@ -91,7 +91,8 @@
             <input type="password" name="password" placeholder="Enter new password"><br>
             <input type="password" name="password2" placeholder="Retype password"><br>
             <input type="button" value="Sign up" id="signup_button"><br>
-            <a href="login.php" style="text-decoration:none;display:block;text-align:center;">Already have an account? Log In here</a>
+            <a href="login.php" style="text-decoration:none;display:block;text-align:center;">Already have an account? 
+             LogIn here</a>
         </form>
     </div>
 </body>
@@ -107,7 +108,7 @@
         signup_button.disabled=true;
         signup_button.value="Loading... Please wait...";
         var myForm=_("myForm");
-        var inputs=myForm.getElementsByTagName("INPUT");
+        var inputs=myForm.getElementsByTagName("input");
         var data={};
       for(var i=inputs.length-1;i>=0;i--){
             var key=inputs[i].name;
@@ -141,6 +142,7 @@
         var xml=new XMLHttpRequest();
         xml.onload=function(){
             if(xml.readState==4 || xml.status==200){
+              
                 handle_result(xml.responseText);
                 signup_button.disabled=false;
                 signup_button.value="Sign Up";
