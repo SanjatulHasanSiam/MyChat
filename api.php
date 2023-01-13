@@ -55,23 +55,14 @@ else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="contacts"){
   include("includes/send_message.php");
  }
  function message_left($data,$row){
-  $img= "";
-  if(empty($row->image)){
-    $gender = $row->gender;
-    if($gender=="Male"){
-      $img = "ui/images/user_male.jpg";
-    }
-    else{
-      $img = "ui/images/user_female.jpg";
-    }
-  }
-  else{
-    $img=$row->image;
-  }
+  $image =($row->gender=="Male")? 'ui/images/user_male.jpg':'ui/images/user_female.jpg';
+     if(file_exists($row->image)){
+       $image = $row->image;
+     }
   return "
   <div id='message_left'>
   <div></div>
-    <img src='$img'>
+    <img src='$image'>
        <b> $row->username</b><br>
        $data->message<br><br>
         <span style='font-size:11px;color:white;'>".date("jS M Y H:i:s a",strtotime($data->date))."</span>
@@ -79,27 +70,27 @@ else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="contacts"){
  }
 
  function message_right($data,$row){
-  $img= "";
-  if(empty($row->image)){
-    $gender = $row->gender;
-    if($gender=="Male"){
-      $img = "ui/images/user_male.jpg";
-    }
-    else{
-      $img = "ui/images/user_female.jpg";
-    }
-  }
-  else{
-    $img=$row->image;
-  }
-  return "
+  $image =($row->gender=="Male")? 'ui/images/user_male.jpg':'ui/images/user_female.jpg';
+     if(file_exists($row->image)){
+       $image = $row->image;
+     }
+  $a= "
   <div id='message_right'>
-  <div></div>
-    <img src='$img' style='float:right;'>
+  <div>";
+  if($data->seen){
+    $a.="<img src='ui/icons/blue check mark.png' style=''>";
+  }else if($data->received){
+    $a.="<img src='ui/icons/check mark.png' style=''>";
+  }
+  
+  
+  $a.=" </div>
+    <img src='$image' style='float:right;'>
        <b> $row->username</b><br>
        $data->message<br><br>
         <span style='font-size:11px;color:#888;'>".date("jS M Y H:i:s a",strtotime($data->date))."</span>
   </div>";
+  return $a;
  }
 
  function message_controls(){

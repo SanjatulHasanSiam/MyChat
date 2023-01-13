@@ -189,12 +189,21 @@
         margin:2px;
         border:solid 2px white;
     }
+    #message_right div img{
+        width:18px;
+        height: 18px;
+        float:none;
+        border-radius: 50%;
+        margin:0px;
+        border:none;
+        
+    }
     #message_right div{
         width:20px;
         height: 20px;
         border-radius: 50%;
-        border:solid 2px white;
-        background-color: #34474f;
+        border:solid 2px grey;
+        background-color: white;
         position: absolute;
         right:-10px;
         top:20px;
@@ -250,6 +259,8 @@
 
 </html>
 <script type="text/javascript">
+    // var CURRENT_CHAT_USER="";
+    var SEEN_STATUS=false;
     function _(element) {
         return document.getElementById(element);
     }
@@ -299,16 +310,18 @@
                 profile_image.src=obj.image;
                 break;
             case "contacts":
+                
                 var inner_left_pannel=_("inner_left_pannel");
-               
                 inner_right_pannel.style.overflow="hidden";
                 inner_left_pannel.innerHTML=obj.message;
                 break;
             case "chats_refresh":
+                SEEN_STATUS=false;
                 var messages_holder=_("messages_holder");
                 messages_holder.innerHTML=obj.messages;
                 break;
             case "chats":
+                SEEN_STATUS=false;
                 var inner_left_pannel=_("inner_left_pannel");
                 inner_left_pannel.innerHTML=obj.user;
                 inner_right_pannel.innerHTML=obj.messages;
@@ -317,7 +330,7 @@
                     messages_holder.scrollTo(0,messages_holder.scrollHeight);
                     var message_text=_("message_text");
                     message_text.focus();
-                },0);
+                },100);
 
                 break;
                 case "settings":
@@ -370,13 +383,23 @@
                 if(event.keyCode==13){
                     send_message(event);
                 }
-            }
+                SEEN_STATUS=true;
+    }
 
     setInterval(function(){
 if(CURRENT_CHAT_USER != ""){
-    get_data({userid:CURRENT_CHAT_USER},"chats_refresh");
+  //  console.log(SEEN_STATUS);
+    get_data({
+        userid:CURRENT_CHAT_USER,
+        seen:SEEN_STATUS
+    },"chats_refresh");
 }
     },5000);
+
+function set_seen(e){
+    SEEN_STATUS=true;
+}
+
 </script>
 <script type="text/javascript">
             var CURRENT_CHAT_USER="";

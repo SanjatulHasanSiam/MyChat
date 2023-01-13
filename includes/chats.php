@@ -5,23 +5,21 @@ if(isset( $DATA_OBJ->find->userid)){
 }
 
 $refresh = false;
+$seen = false;
 if($DATA_OBJ->data_type=="chats_refresh"){
   $refresh = true;
+  $seen = $DATA_OBJ->find->seen;
 }
-
 $sql = "select * from users where userid = :userid limit 1";
  $result=$DB->read($sql,$arr);
 if(is_array($result)){
-//user found
-    //$mydata = $DATA_OBJ->find->userid;
     $row = $result[0];
-    //$mydata = $result->username;
     $image =($row->gender=="Male")? 'ui/images/user_male.jpg':'ui/images/user_female.jpg';
     if(file_exists($row->image)){
       $image = $row->image;
     }
   $row->image = $image;
-
+  $mydata = "";
   if(!$refresh){
     $mydata = "Now chatting with:<br>
     <div id='active_contact'>
@@ -29,10 +27,10 @@ if(is_array($result)){
           $row->username
 </div>";
   }
-  
+  $messages = "";
   if(!$refresh){
   $messages = "
-<div id='messages_holder_parent' style='height:630px;'>
+<div id='messages_holder_parent' onclick='set_seen(event)' style='height:630px;'>
 <div id='messages_holder' style='height:490px;overflow-y:scroll;'>"; 
 }
 //read from db
@@ -43,8 +41,14 @@ $result2=$DB->read($sql,$a);
  if (is_array($result2)) {
     $result2 = array_reverse($result2);
     foreach($result2 as $data){
-      $myuser = $DB->get_user($data->sender);
 
+      $myuser = $DB->get_user($data->sender);
+      if($data->receiver == $_SESSION['userid'] && $data->received == 1 && $seen){
+        $DB->Write("update messages set seen = 1 where id = '$data->id' limit 1");
+      }
+      if($data->receiver == $_SESSION['userid']){
+        $DB->Write("update messages set received = 1 where id = '$data->id' limit 1");
+      }
       if($_SESSION['userid']==$data->sender){
         $messages .= message_right($data,$myuser);
       }
@@ -65,10 +69,34 @@ $result2=$DB->read($sql,$a);
   }
     echo json_encode($info);
 }else{
-//user not found
-$info->message = "That contact was not found";
-$info->data_type = "chats";
-echo json_encode($info);
+  $a['userid']=$_SESSION['userid'];
+  $sql = "select * from messages where (sender = :userid || receiver = :userid) group by msgid order by id desc limit 10";
+ $result2=$DB->read($sql,$a);
+  $mydata = "Previous Chats:<br>";
+ if (is_array($result2)) {
+    $result2 = array_reverse($result2);
+    foreach($result2 as $data){
+      $other_user=$data->sender;
+      if($data->sender== $_SESSION['userid']){
+        $other_user=$data->receiver;
+      }
+      $myuser = $DB->get_user( $other_user);
+      $image =($myuser->gender=="Male")? 'ui/images/user_male.jpg':'ui/images/user_female.jpg';
+      if(file_exists($myuser->image)){
+        $image = $myuser->image;
+      }
+      $mydata .= "
+      <div userid='$myuser->userid' id='active_contact'  onclick='start_chat(event)' style='cursor:pointer;'>
+        <img src='$image'>
+            $myuser->username<br>
+            <span style='font-size:11px;'>'$data->message'</span>
+      </div>";
+    }
+ }
+ $info->user = $mydata;
+ $info->messages = "";
+ $info->data_type = "chats";
+ echo json_encode($info);
 }
  
  ?>
