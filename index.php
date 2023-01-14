@@ -106,7 +106,7 @@
     }
     #contact{
         width: 100px;
-        height: 120px;
+        height: 180px;
         margin: 10px;
         display: inline-block;
         vertical-align: top;
@@ -260,7 +260,7 @@
                     <label id="label_chat" for="radio_chat">Chat <img src="ui/icons/chat.png" alt=""></label>
                     <label id="label_contacts" for="radio_contacts">Contact<img src="ui/icons/contacts.png" alt=""></label>
                     <label id="label_settings" for="radio_settings">Settings<img src="ui/icons/settings.png" alt=""></label>
-                    <label id="label_blocked" for="radio_blocked">Blocked Users<img src="ui/icons/settings.png" alt=""></label>
+                    <label id="label_find" for="radio_blocked">Find Users<img src="ui/icons/settings.png" alt=""></label>
 
                     <label id="logout" for="radio_logout">Logout<img src="ui/icons/contact-icon.png" alt=""></label>
                 </div>
@@ -303,11 +303,12 @@
     logout.addEventListener("click",logout_user);
     var label_contacts=_("label_contacts");
     label_contacts.addEventListener("click",get_contacts);
-    var label_contacts=_("label_chat");
+    var label_chat=_("label_chat");
     label_chat.addEventListener("click",get_chats);
-    var label_contacts=_("label_settings");
+    var label_settings=_("label_settings");
     label_settings.addEventListener("click",get_settings);
-
+    var label_find=_("label_find");
+    label_find.addEventListener("click",get_find);
     function get_data(find,type){
 
             var xml=new XMLHttpRequest();
@@ -327,7 +328,7 @@
             xml.send(data);
     }
    function handle_result(result,type){
-//alert(result);
+// alert(result);
     if(result.trim()!=""){
     var inner_right_pannel=_("inner_right_pannel");
     inner_right_pannel.style.overflow="visible";
@@ -345,7 +346,11 @@
                 profile_image.src=obj.image;
                 break;
             case "contacts":
-                
+                var inner_left_pannel=_("inner_left_pannel");
+                inner_right_pannel.style.overflow="hidden";
+                inner_left_pannel.innerHTML=obj.message;
+                break;
+            case "friend":
                 var inner_left_pannel=_("inner_left_pannel");
                 inner_right_pannel.style.overflow="hidden";
                 inner_left_pannel.innerHTML=obj.message;
@@ -412,13 +417,19 @@
    }
    get_data({},"user_info");
    get_data({},"contacts");
+   get_data({},"friend");
    var radio_contacts=_("radio_contacts");
    radio_contacts.checked=true;
    function get_contacts(e){
     get_data({},"contacts");
    }
+  
+   
    function get_chats(e){
     get_data({},"chats");
+   }
+   function get_find(e){
+    get_data({},"friend");
    }
    function get_settings(e){
     get_data({},"settings");

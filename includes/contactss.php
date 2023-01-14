@@ -1,9 +1,9 @@
- <?php
+<?php
  sleep(0.5);
  $myid = $_SESSION['userid'];
- $sql = "select * from users where userid !='$myid' ";
- $relation = "SELECT added_by FROM `friend_list` WHERE added = '$myid' union SELECT added FROM `friend_list` WHERE added_by = '$myid'";
- $myusers=$DB->read($sql,[]);
+
+ 
+ 
  $mydata = 
  '
  <style>
@@ -20,9 +20,17 @@
  }
  </style> 
  <div style="text-align:center ; anidmation:appear 1s ease">';
+ $relation = "SELECT added_by FROM `friend_list` WHERE added = '$myid' union SELECT added FROM `friend_list` WHERE added_by = '$myid'";
+ $users=$DB->read($relation,[]);
+if (is_array($users)){
+  $data="";
+foreach ($users as$value) {
+    $data = $value->added_by;
+  $sql = "select * from users where userid ='$data' ";
+ $myusers=$DB->read($sql,[]);
  if (is_array( $myusers)) {
-  //check for new messages
-   
+
+   //check for new messages
    $msgs = array();
    $me = $_SESSION['userid'];
    $query = "select * from messages where receiver ='$me' && received = 0";
@@ -38,8 +46,6 @@
        }
      }
    }
-
-
    foreach( $myusers as $row){
      $image =($row->gender=="Male")? 'ui/images/user_male.jpg':'ui/images/user_female.jpg';
      if(file_exists($row->image)){
@@ -50,17 +56,19 @@
         <img src='$image'><br>
         $row->username<br><br>
         <span style='text-decoration:none;cursor:pointer;border-radius:3px;padding:1.5px;margin-top:2px;border:1px black solid;background-color:orange; color: white;font-weight: bold;'><a style='text-decoration:none;color: whitw;font-weight: bold' href='includes/block_user.php?u_id=$row->userid'>Remove User </a></span>
-            
-            ";
-             if(count($msgs)>0 && isset($msgs[$row->userid])){
-              $mydata .= " <div style='width:20px;height:20px;border-radius:50%; 
-              border:2px solid white;background-color: coral;color:white;position:absolute;left:0;top:0;'>".$msgs[$row->userid]."</div>";
-             }
+                 ";
+                 if(count($msgs)>0 && isset($msgs[$row->userid])){
+                  $mydata .= " <div style='width:20px;height:20px;border-radius:50%; 
+                  border:2px solid white;background-color: coral;color:white;position:absolute;left:0;top:0;'>".$msgs[$row->userid]."</div>";
+                 }
              $mydata .= "
              </div>";
  
    }
  }
+}
+}
+
  $mydata .= '
 </div>';
     $info->message = $mydata;

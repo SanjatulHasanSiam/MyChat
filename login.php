@@ -83,6 +83,7 @@
             <input type="password" name="password" placeholder="Enter new password"><br>
             <input type="submit" value="Log In" id="login_button"><br>
             <br>
+            <a href="forgetpassword.php" style="text-decoration:none;display:block;text-align:center;"> Forgot password?</a>
             <a href="signup.php" style="text-decoration:none;display:block;text-align:center;">Don't have an account? Sign Up here</a>
         </form>
     </div>

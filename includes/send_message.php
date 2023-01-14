@@ -34,7 +34,7 @@ if(is_array($result)){
     <div id='active_contact'>
       <img src='$image'>
           $row->username <br><br>
-          <span style='text-decoration:none;cursor:pointer;border-radius:3px;padding:1.5px;margin-top:2px;border:1px black solid;background-color:orange; color: whitw;font-weight: bold;' onclick='block_user(event)'><a style='text-decoration:none;color: whitw;font-weight: bold' href='includes/block_user.php?u_id=$row->userid'>Block User</a></span>
+          <span style='text-decoration:none;cursor:pointer;border-radius:3px;padding:1.5px;margin-top:2px;border:1px black solid;background-color:orange; color: whitw;font-weight: bold;' onclick='block_user(event)'><a style='text-decoration:none;color: whitw;font-weight: bold' href='includes/block_user.php?u_id=$row->userid'>Remove User</a></span>
 </div>";
 
   $messages = "

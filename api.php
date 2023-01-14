@@ -25,6 +25,7 @@ else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="login"){
    //Log in
  include("includes/login.php");
  }
+
  else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="logout"){
   //  logout
   include("includes/logout.php");
@@ -35,7 +36,11 @@ else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="user_info"){
 }
 else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="contacts"){
   // user_info
-  include("includes/contacts.php");
+  include("includes/contactss.php");
+ }
+ else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="friend"){
+  // user_info
+  include("includes/find.php");
  }
  else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="chats" || $DATA_OBJ->data_type=="chats_refresh"){
   // user_info

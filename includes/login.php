@@ -28,20 +28,20 @@ $info=(object)[];
     $result = $result[0];
     $verify = password_verify($DATA_OBJ->password, $result->password);
    // if($result->password == $DATA_OBJ->password){
-      if($verify ){
+      if($verify && $result->isVerified){
       $_SESSION['userid'] = $result->userid;
       $info->message = "You're logged in successfully.";
       $info->data_type = "info";
       echo json_encode($info);
     }
     else{
-      $info->message = "Wrong Password";
+      $info->message = "Wrong Credintial";
       $info->data_type = "error";
       echo json_encode($info);
     }
   } else {
      
-     $info->message = "Wrong Email";
+     $info->message = "Wrong Credintial";
      $info->data_type = "error";
      echo json_encode($info);
    }

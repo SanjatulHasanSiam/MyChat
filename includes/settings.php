@@ -1,5 +1,5 @@
 <?php
-sleep(1);
+sleep(0.5);
 $sql = "select * from users where userid=:userid limit 1";
 $id=$_SESSION['userid'];
 $data= $DB->read($sql,['userid'=>$id]);
