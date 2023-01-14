@@ -72,16 +72,13 @@ if(is_array($data)){
                 </div>
                 <form id="myForm" action="">
                     <input type="text" name="username" placeholder="Enter Username" value="'.$data->username.'"><br>
-                    <input type="text" name="email" placeholder="Enter Email" value="'.$data->email.'"><br>
-
                     <div style="padding:10px">
                         <br>Gender: <br>
                         <input type="radio" value="Male" name="gender" id="" '.$gender_male.'>Male <br>
                         <input type="radio" value="Female" name="gender" id="" '.$gender_female.'>Female <br>
                     </div>
-
-                    <input type="password" name="password" placeholder="Enter new password" value="'.$data->password.'"><br>
-                    <input type="password" name="password2" placeholder="Retype password" value="'.$data->password.'"><br>
+                    <input type="password" name="password" placeholder="Enter new password" value=""><br>
+                    <input type="password" name="password2" placeholder="Retype password" value=""><br>
                     <input type="button" value="Save Settings" id="save_settings_button" onclick="collect_data(event)">
                 </form>
                 </div>

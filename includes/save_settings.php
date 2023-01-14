@@ -16,15 +16,7 @@ else{
    $Error="Please enter a valid username.<br>";
  }
 }
- $data['email'] = $DATA_OBJ->email;
- if(empty($DATA_OBJ->email)){
-   $Error="Please enter a valid email.<br>";
- }
- else{
-   if(!preg_match("/([\w\-]+\@[\w\-]+\.[\w\-]+)/",$DATA_OBJ->email)){
-     $Error="Please enter a valid email.<br>";
-   }
- }
+
  $data['gender'] = isset($DATA_OBJ->gender)?$DATA_OBJ->gender:null;
  if(empty($DATA_OBJ->gender)){
    $Error="Please select a gender<br>";
@@ -48,8 +40,9 @@ else{
    }
  }
  if ($Error == "") {
-
-   $query = "update users set username=:username,gender=:gender,email=:email,password= :password where userid=:userid limit 1";
+  $data['password']=password_hash( $DATA_OBJ->password, 
+  PASSWORD_DEFAULT);
+   $query = "update users set username=:username,gender=:gender,password= :password where userid=:userid limit 1";
    $result = $DB->write($query,$data);
    if ($result) {
     $info->message = "Your data was saved.";

@@ -33,7 +33,8 @@ if(is_array($result)){
     $mydata = "Now chatting with:<br>
     <div id='active_contact'>
       <img src='$image'>
-          $row->username
+          $row->username <br>
+          
 </div>";
 
   $messages = "

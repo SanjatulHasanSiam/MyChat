@@ -434,7 +434,9 @@
     message:message_text.value.trim(),
     userid:CURRENT_CHAT_USER
    },"send_message");
-   
+   }
+   function block_user(){
+
    }
    function enter_pressed(event){
                 if(event.keyCode==13){
