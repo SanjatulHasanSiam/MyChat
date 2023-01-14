@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 14, 2023 at 06:41 AM
+-- Generation Time: Jan 14, 2023 at 06:49 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -24,21 +24,22 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `block_list`
+-- Table structure for table `friend_list`
 --
 
-CREATE TABLE `block_list` (
+CREATE TABLE `friend_list` (
   `id` bigint(20) NOT NULL,
-  `blocked_by` bigint(20) NOT NULL,
-  `blocked` bigint(20) NOT NULL
+  `added_by` bigint(20) NOT NULL,
+  `added` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `block_list`
+-- Dumping data for table `friend_list`
 --
 
-INSERT INTO `block_list` (`id`, `blocked_by`, `blocked`) VALUES
-(8, 852162731, 184793477769);
+INSERT INTO `friend_list` (`id`, `added_by`, `added`) VALUES
+(1, 1273952, 49321434932372),
+(2, 1273952, 96818098321650);
 
 -- --------------------------------------------------------
 
@@ -65,12 +66,9 @@ CREATE TABLE `messages` (
 --
 
 INSERT INTO `messages` (`id`, `msgid`, `sender`, `receiver`, `message`, `files`, `date`, `seen`, `received`, `deleted_sender`, `deleted_receiver`) VALUES
-(1, 'xMukEh3C73f57VHGmq2QBWdeMJhEOCCK1rWy', 2579389443460, 852162731, 'hi', NULL, '2023-01-14 06:02:47', 1, 1, 0, 0),
-(2, 'xMukEh3C73f57VHGmq2QBWdeMJhEOCCK1rWy', 852162731, 2579389443460, 'Hello', NULL, '2023-01-14 06:03:04', 1, 1, 0, 0),
-(3, 'xMukEh3C73f57VHGmq2QBWdeMJhEOCCK1rWy', 2579389443460, 852162731, 'How are you?', NULL, '2023-01-14 06:03:25', 1, 1, 0, 0),
-(4, 'xMukEh3C73f57VHGmq2QBWdeMJhEOCCK1rWy', 2579389443460, 852162731, '', 'uploads/ann1.png', '2023-01-14 06:03:51', 1, 1, 0, 0),
-(5, 'xMukEh3C73f57VHGmq2QBWdeMJhEOCCK1rWy', 2579389443460, 852162731, 'All right', NULL, '2023-01-14 06:04:37', 1, 1, 0, 0),
-(6, 'xMukEh3C73f57VHGmq2QBWdeMJhEOCCK1rWy', 852162731, 2579389443460, 'I didn\'t get that', NULL, '2023-01-14 06:06:56', 0, 1, 0, 0);
+(1, 'g7mQEGjx89X2xISFmFK1cGfk', 1273952, 49321434932372, 'Hi', NULL, '2023-01-14 18:43:55', 1, 1, 0, 0),
+(2, 'g7mQEGjx89X2xISFmFK1cGfk', 49321434932372, 1273952, '', 'uploads/user2.jpg', '2023-01-14 18:44:55', 1, 1, 0, 0),
+(3, 'g7mQEGjx89X2xISFmFK1cGfk', 49321434932372, 1273952, 'hi', NULL, '2023-01-14 18:45:38', 0, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -87,27 +85,30 @@ CREATE TABLE `users` (
   `password` varchar(100) NOT NULL,
   `image` varchar(500) NOT NULL,
   `date` datetime NOT NULL,
-  `online` int(11) NOT NULL
+  `online` int(11) NOT NULL,
+  `isVerified` tinyint(1) NOT NULL DEFAULT 0,
+  `OTP` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `userid`, `username`, `email`, `gender`, `password`, `image`, `date`, `online`) VALUES
-(1, 852162731, 'Sanjatul Hasan Siam', 'shsiam99@yahoo.com', 'Male', '$2y$10$0gjzXC3qbyEweD1IdXal3uC3WhCVGW1vr6BsVprc3IcqeuXMA78Xy', '', '2023-01-14 04:26:01', 0),
-(2, 184793477769, 'Abdullah Al Tahmid', 'tahmid@gmail.com', 'Male', '$2y$10$mWvveZf5x539uWKMFcWXzOdIw05nZvEAuA8SxuBT4zKTWdQHBlilm', '', '2023-01-14 04:27:27', 0),
-(3, 3969942498, 'Sunaan Sultan', 'sunaan@gmail.com', 'Male', '$2y$10$Ayd5ixr2mOpXPWx3PU4c5.qKb1.Obq98DBsEknTlJzfCetR3bRLT.', '', '2023-01-14 04:28:22', 0),
-(4, 2579389443460, 'Ayesha Nasrin Ripa', 'ayesha@gmail.com', 'Female', '$2y$10$0P7lxVgxZv/.aU4vY5fhjub34bZuBTjgXpgaEKo9QkNk/7ILgPptG', '', '2023-01-14 04:29:06', 0);
+INSERT INTO `users` (`id`, `userid`, `username`, `email`, `gender`, `password`, `image`, `date`, `online`, `isVerified`, `OTP`) VALUES
+(10, 1273952, 'Sanjatul', 'sanjatulhasansiam.iit@gmail.com', 'Male', '$2y$10$oSIczCashilbmtvYMCay4ONnoAZxtm3tUCwyImZV0M7TbXz/MyAoW', 'uploads/IMG_20220630_141150.jpg', '2023-01-14 18:22:03', 0, 1, 1645),
+(11, 49321434932372, 'Ayesha', 'ayesharipa25@gmail.com', 'Female', '$2y$10$Fyta4iOGTsEb346RIxt19e3L/39DAVrTqnGtafD1mgXVOLLyG22/u', '', '2023-01-14 18:38:43', 0, 1, 1289),
+(12, 96818098321650, 'Tahmid', 'mdtahmidh7@gmail.com', 'Male', '$2y$10$MQdKqkA8chWejNOLKi.lkuHeXw45JNF9HeYJwQ8TxMZozcgfWBk3y', '', '2023-01-14 18:40:12', 0, 1, 1050),
+(13, 95856319111284, 'Fardin Alif', 'almfardin1521@gmail.com', 'Male', '$2y$10$8G66Skuzi5fIQQAuRCUCZ.RqKwZRWAwkeZlW96Y2uJcVt8vDFPoIq', '', '2023-01-14 18:41:28', 0, 1, 1239),
+(14, 8817646, 'Siam', 'sanjatul2514@student.nstu.edu.bd', 'Male', '$2y$10$kpWckwaOO1u0UxA80iRVOOQ4BLPyl10M3gxO8xRDN2vUcsu4kZwCq', '', '2023-01-14 18:41:51', 0, 1, 1854);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `block_list`
+-- Indexes for table `friend_list`
 --
-ALTER TABLE `block_list`
+ALTER TABLE `friend_list`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -135,22 +136,22 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `block_list`
+-- AUTO_INCREMENT for table `friend_list`
 --
-ALTER TABLE `block_list`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+ALTER TABLE `friend_list`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

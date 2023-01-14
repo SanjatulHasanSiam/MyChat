@@ -1,3 +1,64 @@
+<?php
+require_once('./mailer.php');
+require_once('./classes/autoload.php');
+
+if (isset($_POST['submit'])) {
+ $userid= $DB->generate_id(20);
+ $date =date("Y-m-d H:i:s");
+//Validate username
+ $username = $_POST['username'];
+ $gender=$_POST['gender'];
+ $password = $_POST['password'];
+ $password2 = $_POST['password2'];
+ $email = $_POST['email'];
+
+
+ if(strlen($username )<3){
+    echo "<script>alert('Username must be at least 3 charachters long.')</script>";
+ }
+ if(!preg_match("/^[a-z A-Z]*$/",$username)){
+    echo "<script>alert('Please enter a valid username.')</script>";
+ }
+
+ 
+ if(empty($gender)){
+   $Error="Please select a gender";
+ }
+
+ if(empty($password)){
+    echo "<script>alert('Please enter a valid password.')</script>";
+ }
+ else{
+   if($password!= $password2){
+    echo "<script>alert('Entered passwords must match.')</script>";
+   }
+   if(strlen($password)<8){
+     $Error="Password must be atleast 8 charachters long.";
+   }
+ }
+$sql = "select * from users where email= '$email' limit 1";
+$res=$DB->read($sql,[]);
+if(!is_array($res)){
+$password=password_hash( $password, PASSWORD_DEFAULT);
+$otp =rand(1000,2000);
+  $query = "insert into users (userid,username,gender,email,password,date,OTP) values ('$userid','$username','$gender','$email','$password','$date','$otp')";
+  $result = $DB->write($query,[]);
+        $confirm = "http://localhost/MyChat/verify.php?otp=$otp";
+    if ($result) {
+      sendMail($email,$confirm ,"Registration in MyChat Application");
+      echo "<script>alert('Registration completed')</script>";
+      header("Location: http://localhost/MyChat/login.php");
+    }
+  else {
+    $info->message = "Sorry, your profile was not created.";
+    echo "<script>alert('Sorry, your profile was not created.')</script>";
+  }
+}
+else{
+    echo "<script>alert('Email id already exsits')</script>";
+}
+  }
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,7 +106,8 @@
     
     input[type=text],
     input[type=password],
-    input[type=button] {
+    input[type=submit],
+    input[type=email] {
         padding: 10px;
         margin: 10px;
         width: 98%;
@@ -53,7 +115,7 @@
         border-radius: 5px;
     }
     
-    input[type=button] {
+    input[type=submit] {
         width: 103%;
         cursor: pointer;
         background-color: #2b5488;
@@ -78,9 +140,9 @@
             <div style="font-size: 20px; font-family:myFont; padding-bottom:10px;">Sign Up</div>
         </div>
         <div id="error" style=""></div>
-        <form id="myForm" action="">
-            <input type="text" name="username" placeholder="Enter Username"><br>
-            <input type="text" name="email" placeholder="Enter Email"><br>
+        <form id="myForm" action="" method="post">
+            <input type="text" name="username" placeholder="Enter Username" required><br>
+            <input type="email" name="email" placeholder="Enter Email" required><br>
 
             <div style="padding:10px">
                 <br>Gender: <br>
@@ -88,9 +150,9 @@
                 <input type="radio" value="Female" name="gender" id="">Female <br>
             </div>
 
-            <input type="password" name="password" placeholder="Enter new password"><br>
-            <input type="password" name="password2" placeholder="Retype password"><br>
-            <input type="button" value="Sign up" id="signup_button"><br>
+            <input type="password" name="password" placeholder="Enter new password" required><br>
+            <input type="password" name="password2" placeholder="Retype password" required><br>
+            <input type="submit" name="submit" value="Sign up" id="signup_button" ><br>
             <a href="login.php" style="text-decoration:none;display:block;text-align:center;">Already have an account? 
              LogIn here</a>
         </form>
@@ -98,7 +160,7 @@
 </body>
 
 </html>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     function _(element) {
         return document.getElementById(element);
     }
@@ -152,10 +214,10 @@
             xml.send(data_string);
     }
     function handle_result(result){
-        
+        alert(result);
         var data=JSON.parse(result);
         if(data.data_type=="info"){
-            alert(data.message);
+           // alert(data.message);
             window.location="index.php";
         }else{
             var error=_("error");
@@ -163,4 +225,4 @@
             error.style.display="block";
         }
     }
-</script>
+</script> -->

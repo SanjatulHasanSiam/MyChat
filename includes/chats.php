@@ -33,7 +33,7 @@ if(is_array($result)){
   if(!$refresh){
   $messages = "
 <div id='messages_holder_parent' onclick='set_seen(event)' style='height:630px;'>
-<div id='messages_holder' style='height:465px;overflow-y:scroll;'>"; 
+<div id='messages_holder' style='height:460px;overflow-y:scroll;'>"; 
 }
 //read from db
 $a['sender']=$_SESSION['userid'];

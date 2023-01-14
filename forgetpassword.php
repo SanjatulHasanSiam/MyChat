@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once('./mailer.php');
 require_once("./classes/autoload.php");
 if (isset($_POST['submit'])) {
     $email = $_POST['email'];
@@ -13,6 +14,7 @@ if (isset($_POST['submit'])) {
         $query = "UPDATE `users` SET `OTP`='$otp' WHERE email='$email'";
         $DB = new Database();
         $result = $DB->read($query, []);
+        sendMail($email,$otp,"Resetting Password");
             header("Location: http://localhost/MyChat/changepassword.php");
             
         }else{

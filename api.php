@@ -19,7 +19,7 @@ $Error = "";
 //process the data
 if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="signup"){
   //sign up
- include("includes/signup.php");
+ include("signupback.php");
 }
 else if(isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type=="login"){
    //Log in

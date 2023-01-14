@@ -86,3 +86,4 @@ public function generate_id($max){
     return $rand;
 }
 }
+$DB = new Database();

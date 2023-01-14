@@ -1,5 +1,5 @@
 <?php
-  include('connect.php');
+ 
   use PHPMailer\PHPMailer\PHPMailer;
   use PHPMailer\PHPMailer\SMTP;
   use PHPMailer\PHPMailer\Exception;
@@ -17,15 +17,15 @@
         $mail->isSMTP();                                            //Send using SMTP
         $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'piashpiash222@gmail.com';                     //SMTP username
-        $mail->Password   = '';                               //SMTP password
+        $mail->Username   = 'shsiam800@gmail.com';                     //SMTP username
+        $mail->Password   = 'uzbbrrmjuwkeofhm';                               //SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
         $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
     
         //Recipients
-        $mail->setFrom('piashpiash222@gmail.com', 'Admin Confirmation');
+        $mail->setFrom('shsiam800@gmail.com', 'OTP Confirmation');
         $mail->addAddress($email);     //Add a recipient
-        $mail->From = 'piashpiash222@gmail.com';
+        $mail->From = 'shsiam800@gmail.com';
         $mail->Sender = $email;
 
     
