@@ -25,7 +25,7 @@ if(is_array($result)){
     <div id='active_contact'>
       <img src='$image'>
           $row->username<br><br>
-          <span style='text-decoration:none;cursor:pointer;border-radius:3px;padding:3px;margin-top:2px;border:1px black solid;background-color:orange; color: whitw;font-weight: bold;' onclick='block_user(event)'><a style='text-decoration:none;color: whitw;font-weight: bold' href='includes/block_user.php?u_id=$row->userid'>Block User</a></span>
+          <span style='text-decoration:none;cursor:pointer;border-radius:3px;padding:1.5px;margin-top:2px;border:1px black solid;background-color:orange; color: whitw;font-weight: bold;' onclick='block_user(event)'><a style='text-decoration:none;color: whitw;font-weight: bold' href='includes/block_user.php?u_id=$row->userid'>Block User</a></span>
 </div>";
   }
   $messages = "";
@@ -77,7 +77,7 @@ $result2=$DB->read($sql,$a);
     echo json_encode($info);
 }else{
   $a['userid']=$_SESSION['userid'];
-  $sql = "select * from messages where (sender = :userid || receiver = :userid) group by msgid order by id desc limit 10";
+  $sql = "select * from messages where (sender = :userid || receiver = :userid) group by msgid order by id asc limit 10";
  $result2=$DB->read($sql,$a);
   $mydata = "Previous Chats:<br>";
  if (is_array($result2)) {
@@ -96,10 +96,11 @@ $result2=$DB->read($sql,$a);
       <div userid='$myuser->userid' id='active_contact'  onclick='start_chat(event)' style='cursor:pointer;'>
         <img src='$image'>
             $myuser->username<br>
-            <span style='font-size:11px;'>'$data->message'</span>
+         
       </div>";
     }
  }
+//  <span style='font-size:11px;'>'$data->message'</span>
  $info->user = $mydata;
  $info->messages = "";
  $info->data_type = "chats";
