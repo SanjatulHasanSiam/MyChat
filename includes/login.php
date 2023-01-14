@@ -26,7 +26,9 @@ $info=(object)[];
    $result = $DB->read($query,$data);
    if (is_array($result)) {
     $result = $result[0];
-    if($result->password == $DATA_OBJ->password){
+    $verify = password_verify($DATA_OBJ->password, $result->password);
+   // if($result->password == $DATA_OBJ->password){
+      if($verify ){
       $_SESSION['userid'] = $result->userid;
       $info->message = "You're logged in successfully.";
       $info->data_type = "info";

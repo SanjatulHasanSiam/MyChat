@@ -48,11 +48,14 @@ else{
      $Error="Password must be atleast 8 charachters long.";
    }
  }
+
  if ($Error == "") {
   $arr['email'] = $DATA_OBJ->email;
   $sql = "select * from users where email= :email limit 1";
   $res=$DB->read($sql,$arr);
   if(!is_array($res)){
+    $data['password']=password_hash( $DATA_OBJ->password, 
+    PASSWORD_DEFAULT);
   $query = "insert into users (userid,username,gender,email,password,date) values (:userid,:username,:gender,:email,:password,:date)";
   $result = $DB->write($query,$data);
     if ($result) {
