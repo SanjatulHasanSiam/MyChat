@@ -39,7 +39,7 @@ if(is_array($result)){
 
   $messages = "
 <div id='messages_holder_parent' style='height:630px;'>
-<div id='messages_holder' style='height:490px;overflow-y:scroll;'>"; 
+<div id='messages_holder' style='height:485px;overflow-y:scroll;'>"; 
 
 //Read from database
   $a['msgid']=$arr['msgid'];
@@ -47,7 +47,7 @@ if(is_array($result)){
 $sql = "select * from messages where msgid = :msgid order by id desc";
 $result2=$DB->read($sql,$a);
  if (is_array($result2)) {
-    $result2 = array_reverse($result2);
+    $result2 = array_reverse($result2); 
     foreach($result2 as $data){
       $myuser = $DB->get_user($data->sender);
 
